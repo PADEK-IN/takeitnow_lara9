@@ -1,7 +1,8 @@
 <?php
 
-use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\GuestController;
+use App\Http\Controllers\ProfileController;
 
 /*
 |--------------------------------------------------------------------------
@@ -14,9 +15,9 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+// Guest Routes
+Route::get('/', [GuestController::class, 'index'])->name('guest');
+Route::get('/events', [GuestController::class, 'eventPage'])->name('guest.events');
 
 Route::get('/dashboard', function () {
     return view('dashboard');
