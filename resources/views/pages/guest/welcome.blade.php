@@ -144,7 +144,7 @@
           </div>
 
           <div class="row">
-            {{-- @foreach($events as $index => $event)
+            @foreach($events as $index => $event)
             <div class="col-lg-4 col-md-6">
               <div class="event">
                 <div class="event-img card-img-top position-relative">
@@ -163,7 +163,7 @@
                 </div>
               </div>
             </div>
-            @endforeach --}}
+            @endforeach
           </div>
           <div class="my-4 text-center">
               <button type="button" onclick="window.location.href='/events'">Lihat Semua Acara</button>
