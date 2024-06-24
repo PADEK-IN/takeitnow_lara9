@@ -56,6 +56,10 @@ class UserTransactionController extends Controller
                             ->withErrors($validator)
                             ->withInput();
         }
+        if ($request->input('quantity') <= 0) {
+            return redirect()->back()
+                            ->withErrors(['error' => 'Maaf, jumlah tiket tidak boleh 0.']);
+        }
 
         // Handle image upload
         if ($request->hasFile('proof')) {
@@ -64,7 +68,8 @@ class UserTransactionController extends Controller
             $image->storeAs('/uploads', $imageName, 'public_custom');
             $imagePath = 'assets/img/uploads/'.$imageName;
         } else {
-            $imagePath = null; // Default image if no image uploaded
+            return redirect()->back()
+                            ->withErrors(['error' => 'Maaf, tolong upload bukti pembayaran yang sah dengan jelas.']);
         }
 
         try {

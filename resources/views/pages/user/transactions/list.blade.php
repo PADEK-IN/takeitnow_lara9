@@ -23,7 +23,7 @@
                         @foreach ($transactions as $index => $transaction)
                         <tr>
                             <td class="text-center" >{{ $index + 1 }}</td>
-                            <td class="text-center">{{ $transaction->hashid }}</td>
+                            <td class="text-center">#{{ $transaction->hashid }}</td>
                             <td class="text-justify"><a href="/event/{{ $transaction->eventData->hashid }}">{{ $transaction->eventData->name }}</a></td>
                             <td class="text-center">{{ $transaction->quantity }}</td>
                             <td class="text-left">{{ formatRupiah($transaction->eventData->price * $transaction->quantity) }}</td>
@@ -42,8 +42,9 @@
                             <th class="text-center">No</th>
                             <th class="text-center">Kode Tiket</th>
                             <th class="text-center">Nama Event</th>
-                            <th class="text-center">Harga</th>
-                            <th class="text-center">Jadwal Acara</th>
+                            <th class="text-center">Jumlah Tiket</th>
+                            <th class="text-center">Total Bayar</th>
+                            <th class="text-center">Tanggal Bayar</th>
                             <th class="text-center">Status Acara</th>
                             <th class="text-center">Pembayaran</th>
                             <th class="text-center">Aksi</th>

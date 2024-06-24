@@ -18,6 +18,12 @@
                     <div class="position-absolute" style="top: 10px; left: 10px; color: white; background-color: rgba(0, 0, 0, 0.5); padding: 2px;">
                         {{ $event->eventCategory->name }}
                     </div>
+                    @if ($event->totalTransaction == $event->quota)
+                        <div class="position-absolute px-1" style="top: 10px; right: 0px; color: red; background-color: white; padding: 2px;">
+                            Tiket Habis
+                        </div>
+
+                    @endif
                     <div class="position-absolute" style="bottom: 10px; left: 10px; color: white; background-color: rgba(0, 0, 0, 0.5); padding: 2px;">
                         {{ $event->totalTransaction }}/{{ $event->quota }}
                     </div>
@@ -31,9 +37,15 @@
                     <p class="text-muted">{{ $event->schedule }}</p>
                 </div>
                 <div class="card-footer text-center">
-                    <a href="/transaction/create/{{ $event->hashid }}" class="btn btn-primary {{ eventStatus($event->schedule, 'event') }}">
+                    @if ($event->totalTransaction == $event->quota)
+                    <a class="btn btn-secondary btn-sm text-white">
+                        Tiket Habis
+                    </a>
+                    @else
+                    <a href="/transaction/create/{{ $event->hashid }}" class="btn btn-info btn-sm {{ eventStatus($event->schedule, 'event') }}">
                         {{ $event['isActive'] ? "Pesan Tiket" : "Selesai" }}
                     </a>
+                    @endif
                 </div>
             </div>
             @endforeach
