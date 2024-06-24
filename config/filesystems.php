@@ -52,6 +52,12 @@ return [
             'endpoint' => env('AWS_ENDPOINT'),
             'use_path_style_endpoint' => env('AWS_USE_PATH_STYLE_ENDPOINT', false),
         ],
+        'public_custom' => [
+            'driver' => 'local',
+            'root' => public_path('assets/img'), // Path to your custom upload directory
+            'url' => env('APP_URL').'/assets/img/uploads', // URL to your custom upload directory
+            'visibility' => 'public',
+        ],
 
     ],
 
