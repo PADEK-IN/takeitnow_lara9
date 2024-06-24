@@ -42,11 +42,10 @@
                             <th class="text-center">No</th>
                             <th class="text-center">Nama Pengguna</th>
                             <th class="text-center">Acara</th>
-                            <th class="text-center">Kode Tiket</th>
                             <th class="text-center">Jumlah Tiket</th>
+                            <th class="text-center">Total</th>
                             <th class="text-center">Bukti Bayar</th>
                             <th class="text-center">Tanggal Bayar</th>
-                            <th class="text-center">Status</th>
                             <th class="text-center">Pembayaran</th>
                             <th class="text-center">Aksi</th>
                         </tr>

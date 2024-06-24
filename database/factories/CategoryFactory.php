@@ -20,4 +20,11 @@ class CategoryFactory extends Factory
             'name' => $this->faker->sentence(1),
         ];
     }
+
+    public function category($name): static
+    {
+        return $this->state(fn (array $attributes) => [
+            'name' => $name,
+        ]);
+    }
 }

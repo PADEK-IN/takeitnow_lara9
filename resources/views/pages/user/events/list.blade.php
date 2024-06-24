@@ -25,7 +25,7 @@
 
                     @endif
                     <div class="position-absolute" style="bottom: 10px; left: 10px; color: white; background-color: rgba(0, 0, 0, 0.5); padding: 2px;">
-                        {{ $event->totalTransaction }}/{{ $event->quota }}
+                        {{ $event->totalTransaction ?? '0' }}/{{ $event->quota }}
                     </div>
                     <div class="position-absolute" style="bottom: 10px; right: 10px; color: white; background-color: rgba(0, 0, 0, 0.5); padding: 2px;">
                         {{ formatRupiah($event->price) }}

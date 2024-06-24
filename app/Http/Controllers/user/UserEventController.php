@@ -70,7 +70,7 @@ class UserEventController extends Controller
         return view('pages.user.events.detail', compact('event', 'totalTransaction'));
     }
 
-    public function reviewPage($id): View
+    public function reviewPage($id)
     {
         $idUser = Auth::id();
         $idEvent = Hashids::decode($id);
@@ -78,6 +78,11 @@ class UserEventController extends Controller
         $review = Review::where('id_user', $idUser)
                         ->where('id_event', $idEvent)
                         ->first();
+
+        if ($review) {
+            return redirect()->back()
+                            ->withErrors(['error' => 'Maaf, kamu sudah memberi ulasan pada acara ini.']);
+        };
 
         $event = Event::find($idEvent[0]);
 

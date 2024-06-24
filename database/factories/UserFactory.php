@@ -56,4 +56,31 @@ class UserFactory extends Factory
             'role' => "admin",
         ]);
     }
+
+    public function admin(): static
+    {
+        return $this->state(fn (array $attributes) => [
+            'email' => 'admin@gmail.com',
+            'password' => Hash::make('password'), // password
+            'email_verified_at' => now(),
+            'name' => 'Admin',
+            'gender' => "male",
+            'phone' => $this->faker->e164PhoneNumber(),
+            'role' => "admin",
+        ]);
+    }
+
+    public function user(): static
+    {
+        return $this->state(fn (array $attributes) => [
+            'email' => 'user@gmail.com',
+            'password' => Hash::make('password'), // password
+            'email_verified_at' => now(),
+            'name' => 'User',
+            'gender' => "male",
+            'phone' => $this->faker->e164PhoneNumber(),
+            'role' => "user",
+        ]);
+    }
+
 }

@@ -24,7 +24,15 @@
                                 <p><strong>Jumlah Tiket:</strong> {{ $transaction->quantity }}</p>
                                 <p><strong>Total Pembayaran:</strong> {{ formatRupiah($transaction->eventData->price * $transaction->quantity) }}</p>
                                 <p><strong>Tanggal Pembayaran:</strong> {{ $transaction->created_at }}</p>
-                                <p><strong>Status Transaksi:</strong> <input class="form-control col-6" type="text" value="{{ $transaction->status }}" name="status" placeholder="Tulis pesan status transaksi"></p>
+                                <p><strong>Status Transaksi:</strong>
+                                    {{-- <input class="form-control col-6" type="text" value="{{ $transaction->status }}" name="status" placeholder="Tulis pesan status transaksi"> --}}
+                                    <select name="status" class="form-control col-6">
+                                        <option disabled>Pilih Status transaksi</option>
+                                        <option value="Sedang diproses" {{ $transaction->status == 'Sedang diproses' ? 'selected' : '' }}>Sedang diproses</option>
+                                        <option value="Disetujui" {{ $transaction->status == 'Disetujui' ? 'selected' : '' }}>Disetujui</option>
+                                        <option value="Ditolak" {{ $transaction->status == 'Ditolak' ? 'selected' : '' }}>Ditolak</option>
+                                    </select>
+                                </p>
                                 <p><strong>Status Pembayaran:</strong>
                                     <select name="isValid" class="form-control col-6">
                                         <option disabled>Pilih Status pembayaran</option>

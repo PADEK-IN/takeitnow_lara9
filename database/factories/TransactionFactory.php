@@ -32,4 +32,14 @@ class TransactionFactory extends Factory
             'isValid' => true,
         ]);
     }
+
+    public function transaction(): static
+    {
+        return $this->state(fn (array $attributes) => [
+            'id_user' => 2,
+            'id_event' => Event::factory(),
+            'quantity' => $this->faker->randomNumber(1),
+            'proof' => "blank.jpg",
+        ]);
+    }
 }
