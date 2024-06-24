@@ -66,7 +66,6 @@ class UserTransactionController extends Controller
             $image = $request->file('proof');
             $imageName = time() . '_' . $image->getClientOriginalName();
             $image->storeAs('/uploads', $imageName, 'public_custom');
-            $imagePath = 'assets/img/uploads/'.$imageName;
         } else {
             return redirect()->back()
                             ->withErrors(['error' => 'Maaf, tolong upload bukti pembayaran yang sah dengan jelas.']);
@@ -97,7 +96,7 @@ class UserTransactionController extends Controller
                 'id_user' => $idUser,
                 'id_event' => $idEvent[0],
                 'quantity' => $request->input('quantity'),
-                'proof' => $imagePath,
+                'proof' => $imageName,
             ]);
 
         } catch (\Exception $e) {
