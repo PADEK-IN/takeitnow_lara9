@@ -19,8 +19,15 @@ class UserEventController extends Controller
     public function getAllData(): View
     {
         // $events = Event::orderByDesc('schedule')->get();
+        // $events = Event::with('eventTransaction')
+        //                 ->select('events.*', DB::raw('SUM(CASE WHEN transactions.isValid = true THEN 1 ELSE 0 END) as totalTransaction'))
+        //                 ->leftJoin('transactions', 'events.id', '=', 'transactions.id_event')
+        //                 ->groupBy('events.id')
+        //                 ->orderBy('events.schedule', 'desc')
+        //                 ->get();
+
         $events = Event::with('eventTransaction')
-                        ->select('events.*', DB::raw('SUM(CASE WHEN transactions.isValid = true THEN 1 ELSE 0 END) as totalTransaction'))
+                        ->select('events.*', DB::raw('COUNT(transactions.id) as totalTransaction'))
                         ->leftJoin('transactions', 'events.id', '=', 'transactions.id_event')
                         ->groupBy('events.id')
                         ->orderBy('events.schedule', 'desc')
