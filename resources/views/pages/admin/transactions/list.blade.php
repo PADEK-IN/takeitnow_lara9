@@ -9,11 +9,10 @@
                             <th class="text-center px-2" >No</th>
                             <th class="text-center">Nama Pengguna</th>
                             <th class="text-center">Acara</th>
-                            <th class="text-center">Kode Tiket</th>
                             <th class="text-center">Jumlah Tiket</th>
+                            <th class="text-center">Total</th>
                             <th class="text-center">Bukti Bayar</th>
                             <th class="text-center">Tanggal Bayar</th>
-                            <th class="text-center">Status</th>
                             <th class="text-center">Pembayaran</th>
                             <th class="text-center">Aksi</th>
                         </tr>
@@ -22,16 +21,18 @@
                         @foreach ($transactions as $index => $transaction)
                         <tr>
                             <td class="text-center" >{{ $index + 1 }}</td>
-                            <td class="text-left">{{ $transaction->userData->name }}</td>
-                            <td class="text-left">{{ $transaction->eventData->name }}</td>
-                            <td class="text-center">{{ $transaction->hashid }}</td>
+                            <td class="text-left"><a href="{{ route('admin.user.detail', $transaction->userData->hashid) }}">{{ $transaction->userData->name }}</a></td>
+                            <td class="text-left"><a href="/admin/event/{{ $transaction->eventData->hashid }}">{{ $transaction->eventData->name }}</a></td>
                             <td class="text-center">{{ $transaction->quantity }}</td>
+                            <td class="text-left">{{ formatRupiah($transaction->quantity * $transaction->eventData->price) }}</td>
                             <td class="text-center"><img src="{{ asset('assets/img/uploads/'.$transaction->proof) }}" alt=bb" width="50px"></td>
                             <td class="text-center">{{ $transaction->created_at }}</td>
-                            <td class="text-center">{{ $transaction->status }}</td>
                             <td class="text-center">{{ $transaction->isValid ? 'Valid' : 'Tidak Valid' }}</td>
                             <td class="text-center" style="padding: 0">
-                                <a href="/admin/transaction/check/{{ $transaction->hashid }}" class="mr-2 btn btn-sm btn-primary">Validasi</a>
+                                <a href="/admin/transaction/check/{{ $transaction->hashid }}"
+                                    class="mr-2 btn btn-sm {{ $transaction->isValid?'btn-primary':'btn-success' }}">
+                                {{ $transaction->isValid ? 'Batalkan' : 'Validasi' }}
+                                </a>
                             </td>
                         </tr>
                         @endforeach

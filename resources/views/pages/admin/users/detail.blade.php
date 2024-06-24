@@ -16,7 +16,7 @@
                             <p><strong>Jenis Kelamin:</strong> {{ $user->gender }}</p>
                             <p><strong>Nomor Telepon:</strong> {{ $user->phone }}</p>
                             <p><strong>Status:</strong> {{ ucwords(strtolower($user->role)) }}</p>
-                            <button class="btn btn-warning" onclick="window.location.href='/admin/user'">Kembali</button>
+                            <button type="button" class="btn btn-space btn-warning" onclick="history.back()">Kembali</button>
                         </div>
                     </div>
                 </div>

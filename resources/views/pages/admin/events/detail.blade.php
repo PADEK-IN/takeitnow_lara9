@@ -17,7 +17,7 @@
                             <p><strong>Kuota:</strong> {{ $event->quota }}</p>
                             <p><strong>Harga:</strong> {{ formatRupiah($event->price) }}</p>
                             <p><strong>Status Event:</strong> {{ $event->isActive?"Aktif":"Selesai" }}</p>
-                            <!-- Tambahkan informasi lainnya sesuai kebutuhan -->
+                            <button type="button" class="btn btn-space btn-warning" onclick="history.back()">Kembali</button>
                         </div>
                     </div>
                 </div>
