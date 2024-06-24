@@ -16,9 +16,9 @@ class UserIndexController extends Controller
     public function index(): View
     {
         $idUser = Auth::id();
-        $qtyEvent = Transaction::where('id_user', $idUser)->count();
+        $qtyEvent = Transaction::where('id_user', $idUser)->where('isValid', true)->count();
         $qtyReview = Review::where('id_user', $idUser)->count();
-        $qtyTransaction = Transaction::all()->where('id_user', $idUser)->sum(function ($transaction) {
+        $qtyTransaction = Transaction::where('isValid', true)->where('id_user', $idUser)->get()->sum(function ($transaction) {
             $price = $transaction->eventData->price;
             $quantity = $transaction->quantity;
             return $price*$quantity;
