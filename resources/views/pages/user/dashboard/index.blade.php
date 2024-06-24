@@ -35,7 +35,7 @@
             <div class="card">
                 <div class="card-body">
                     <div class="d-inline-block">
-                        <h5 class="text-muted">Total Transaksi</h5>
+                        <h5 class="text-muted">Total Pengeluaran</h5>
                         <h3 class="mb-0">{{ formatRupiah($qty['transaction']) }}</h3>
                     </div>
                     <div class="float-right icon-circle-medium  icon-box-lg  bg-brand-light mt-1">
