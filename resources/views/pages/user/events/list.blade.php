@@ -18,14 +18,14 @@
                     <div class="position-absolute" style="top: 10px; left: 10px; color: white; background-color: rgba(0, 0, 0, 0.5); padding: 2px;">
                         {{ $event->eventCategory->name }}
                     </div>
-                    @if ($event->totalTransaction == $event->quota)
+                    @if ($event->total_quantity == $event->quota)
                         <div class="position-absolute px-1" style="top: 10px; right: 0px; color: red; background-color: white; padding: 2px;">
                             Tiket Habis
                         </div>
 
                     @endif
                     <div class="position-absolute" style="bottom: 10px; left: 10px; color: white; background-color: rgba(0, 0, 0, 0.5); padding: 2px;">
-                        {{ $event->totalTransaction ?? '0' }}/{{ $event->quota }}
+                        {{ $event->total_quantity ?? '0' }}/{{ $event->quota }}
                     </div>
                     <div class="position-absolute" style="bottom: 10px; right: 10px; color: white; background-color: rgba(0, 0, 0, 0.5); padding: 2px;">
                         {{ formatRupiah($event->price) }}
@@ -37,7 +37,7 @@
                     <p class="text-muted">{{ $event->schedule }}</p>
                 </div>
                 <div class="card-footer text-center">
-                    @if ($event->totalTransaction == $event->quota)
+                    @if ($event->total_quantity == $event->quota)
                     <a class="btn btn-secondary btn-sm text-white">
                         Tiket Habis
                     </a>

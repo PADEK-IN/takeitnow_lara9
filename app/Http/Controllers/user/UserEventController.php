@@ -18,32 +18,14 @@ class UserEventController extends Controller
 {
     public function getAllData(): View
     {
-        // $events = Event::orderByDesc('schedule')->get();
-        // $events = Event::with('eventTransaction')
-        //                 ->select('events.*', DB::raw('SUM(CASE WHEN transactions.isValid = true THEN 1 ELSE 0 END) as totalTransaction'))
-        //                 ->leftJoin('transactions', 'events.id', '=', 'transactions.id_event')
-        //                 ->groupBy('events.id')
-        //                 ->orderBy('events.schedule', 'desc')
-        //                 ->get();
-
-        $subquery = DB::table('transactions')
-                ->select('id_event', DB::raw('SUM(CASE WHEN isValid = true THEN 1 ELSE 0 END) as totalTransaction'))
-                ->groupBy('id_event');
-
-        $events = Event::with('eventTransaction')
-                ->leftJoinSub($subquery, 'transaction_counts', function ($join) {
-                    $join->on('events.id', '=', 'transaction_counts.id_event');
-                })
-                ->select('events.*', 'transaction_counts.totalTransaction')
-                ->orderBy('events.schedule', 'desc')
-                ->get();
-
-        // $events = Event::with('eventTransaction')
-        //                 ->select('events.*', DB::raw('COUNT(transactions.id) as totalTransaction'))
-        //                 ->leftJoin('transactions', 'events.id', '=', 'transactions.id_event')
-        //                 ->groupBy('events.id')
-        //                 ->orderBy('events.schedule', 'desc')
-        //                 ->get();
+        $events = Event::leftJoin('transactions', function($join) {
+            $join->on('events.id', '=', 'transactions.id_event')
+                    ->where('transactions.isValid', true);
+        })
+        ->select('events.*', DB::raw('SUM(transactions.quantity) as total_quantity'))
+        ->groupBy('events.id')
+        ->orderBy('events.schedule', 'desc')
+        ->get();
 
         return view('pages.user.events.list', compact('events'));
     }
