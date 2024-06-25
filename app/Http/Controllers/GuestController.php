@@ -12,13 +12,13 @@ class GuestController extends Controller
     {
         $events = Event::orderByDesc('schedule')->take(6)->get();
 
-        return view('pages.guest.welcome', compact('events'));
+        return view('pages.guest.welcome', ['events'=>$events]);
     }
 
     public function eventPage(): View
     {
         $events = Event::orderByDesc('schedule')->get();
 
-        return view('pages.guest.events', compact('events'));
+        return view('pages.guest.events', ['events'=>$events]);
     }
 }
