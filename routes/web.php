@@ -1,8 +1,8 @@
 <?php
 
+use App\Models\Event;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\GuestController;
-use App\Http\Controllers\ProfileController;
+// use App\Http\Controllers\GuestController;
 
 /*
 |--------------------------------------------------------------------------
@@ -16,8 +16,17 @@ use App\Http\Controllers\ProfileController;
 */
 
 // Guest Routes
-Route::get('/', [GuestController::class, 'index'])->name('guest');
-Route::get('/events', [GuestController::class, 'eventPage'])->name('guest.events');
+Route::get('/', function(){
+    $events = Event::orderByDesc('schedule')->take(6)->get();
+
+    return view('pages.guest.welcome', ['events'=>$events]);
+})->name('guest');
+
+Route::get('/events', function(){
+    $events = Event::orderByDesc('schedule')->get();
+
+    return view('pages.guest.events', ['events'=>$events]);
+})->name('guest.events');
 
 require __DIR__.'/auth.php';
 require __DIR__.'/admin.php';
