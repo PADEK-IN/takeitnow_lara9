@@ -19,8 +19,8 @@ class UserEventController extends Controller
     public function getAllData(): View
     {
         $events = Event::leftJoin('transactions', function($join) {
-            $join->on('events.id', '=', 'transactions.id_event')
-                    ->where('transactions.isValid', true);
+            $join->on('events.id', '=', 'transactions.id_event');
+                    // ->where('transactions.isValid', true);
         })
         ->select('events.*', DB::raw('SUM(transactions.quantity) as total_quantity'))
         ->groupBy('events.id')
