@@ -31,8 +31,10 @@
                             <td class="text-center">{{ eventStatus($transaction->eventData->schedule, 'status') }}</td>
                             <td class="text-center">{{ $transaction->status }}</td>
                             <td class="text-center" style="padding: 0">
+                                @if ($transaction->isValid)
                                 <a href="/event/review/{{ $transaction->eventData->hashid }}" class="btn btn-sm btn-secondary
                                 {{ eventStatus($transaction->eventData->schedule, 'button') }}">Review</a>
+                                @endif
                             </td>
                         </tr>
                         @endforeach
