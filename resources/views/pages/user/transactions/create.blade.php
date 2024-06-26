@@ -25,11 +25,17 @@
                         <span class="pt-2">{{ formatRupiah($event->price) }}</span>
                     </div>
                 </div>
+                <div class="form-group row">
+                    <label class="col-12 col-sm-3 col-form-label text-sm-right">Kuota Tiket</label>
+                    <div class="col-12 col-sm-8 col-lg-6 rating">
+                        <span class="pt-2">{{ $totalQuantity.'/'.$event->quota }}</span>
+                    </div>
+                </div>
 
                 <div class="form-group row">
                     <label class="col-12 col-sm-3 col-form-label text-sm-right">Jumlah/Total</label>
                     <div class="col-sm-4 col-lg-3 mb-3 mb-sm-0">
-                        <input type="number" required="" class="form-control" id="qty" name="quantity" placeholder="Jumlah Tiket">
+                        <input type="number" required="" class="form-control" id="qty" name="quantity" placeholder="Jumlah Tiket" max="{{ $event->quota }}">
                     </div>
                     <div class="col-sm-4 col-lg-3">
                         <input id="price" class="d-none" value="{{ $event->price }}">

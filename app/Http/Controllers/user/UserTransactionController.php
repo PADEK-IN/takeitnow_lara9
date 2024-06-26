@@ -10,6 +10,7 @@ use Illuminate\Routing\Controller;
 use Vinkla\Hashids\Facades\Hashids;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 
 class UserTransactionController extends Controller
@@ -33,15 +34,29 @@ class UserTransactionController extends Controller
 
         $event = Event::find($idEvent[0]);
 
-        $isHaveQuota = Transaction::where('id_event', $idEvent)->count();
+        $transaction = Transaction::where('id_event', $idEvent)
+                        ->select(DB::raw('SUM(quantity) as total_quantity'))
+                        ->first();
 
-        if($isHaveQuota >= $event->quota) {
+        $totalQuantity = $transaction->total_quantity ?? 0;
+
+        if($totalQuantity >= $event->quota) {
             return redirect()->back()
                             ->with('error', 'Maaf kuota tiket sudah penuh.')
                             ->withInput();
         }
 
-        return view('pages.user.transactions.create', compact('event'));
+        $isBuy = Transaction::where('id_user', $idUser)
+                ->where('id_event', $idEvent[0])
+                ->exists();
+
+        if ($isBuy) {
+            return redirect()->back()
+                            ->with('error', 'Maaf, kamu sudah membeli tiket untuk acara ini.')
+                            ->withInput();
+        }
+
+        return view('pages.user.transactions.create', compact('event', 'totalQuantity'));
     }
 
     public function createTransaction(Request $request): RedirectResponse
@@ -74,22 +89,17 @@ class UserTransactionController extends Controller
         try {
             $idUser = Auth::id();
             $idEvent=Hashids::decode($request->input('id_event'));
+            $event = Event::find($idEvent[0]);
+            $transaction = Transaction::where('id_event', $idEvent[0])
+                        ->select(DB::raw('SUM(quantity) as total_quantity'))
+                        ->first();
 
-            $totalTransaction = Transaction::where('id_event', $idEvent[0])->count();
+            $totalQuantity = $transaction->total_quantity ?? 0;
 
-            if($totalTransaction >= $request->input('quota')){
-                return redirect()->back()
-                                ->withErrors('error', 'Maaf, kuota acara telah penuh')
-                                ->withInput();
-            }
-
-            $isBuy = Transaction::where('id_user', $idUser)
-                                ->where('id_event', $idEvent[0])
-                                ->exists();
-
-            if ($isBuy) {
+            if($totalQuantity >= $event->quota) {
             return redirect()->back()
-                            ->withErrors(['error' => 'Maaf, kamu sudah membeli tiket untuk acara ini.']);
+                            ->with('error', 'Maaf kuota tiket sudah penuh. Tiket yang tersisa adalah ' . ($event->quota - $totalQuantity) . ' tiket.')
+                            ->withInput();
             }
 
             Transaction::create([
@@ -105,7 +115,7 @@ class UserTransactionController extends Controller
                             ->withInput();
         }
 
-        return redirect()->route('event')->with('success', 'Berhasil melakukan pemesanan. Harap tunggu validasi 1x24 jam ya.');
+        return redirect()->route('event')->with('success', 'Berhasil melakukan pemesanan. Harap tunggu validasi maksimal 1x24 jam ya.');
     }
 
 }
