@@ -31,7 +31,7 @@ class UserEventController extends Controller
             $join->on('events.id', '=', 'transactions.id_event');
         })
         ->select('events.*', DB::raw('SUM(transactions.quantity) as total_quantity'))
-        ->groupBy('events.id', 'events.name', 'events.description', 'events.schedule', 'events.quota', 'events.price')
+        ->groupBy('events.id', 'events.name', 'events.description', 'events.id_category', 'events.image', 'events.schedule', 'events.quota', 'events.price', 'events.isActive', 'events.created_at', 'events.updated_at')
         ->orderBy('events.schedule', 'desc')
         ->get();
 
