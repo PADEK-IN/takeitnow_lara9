@@ -37,10 +37,16 @@ class TransactionController extends Controller
         try {
             //get product by ID
             $validId = Hashids::decode($id);
+
             $transaction = Transaction::findOrFail($validId[0]);
 
             $transaction->status = $request->input('status');
-            $transaction->isValid = $request->input('isValid') === '1';
+            if ($request->input('status')== 'Disetujui') {
+                $transaction->isValid = true;
+            } else {
+                $transaction->isValid = false;
+            }
+            // $transaction->isValid = $request->input('isValid') === '1';
 
             $transaction->save();
 

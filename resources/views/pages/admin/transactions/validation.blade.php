@@ -33,13 +33,13 @@
                                         <option value="Ditolak" {{ $transaction->status == 'Ditolak' ? 'selected' : '' }}>Ditolak</option>
                                     </select>
                                 </p>
-                                <p><strong>Status Pembayaran:</strong>
+                                {{-- <p><strong>Status Pembayaran:</strong>
                                     <select name="isValid" class="form-control col-6">
                                         <option disabled>Pilih Status pembayaran</option>
                                         <option value="1" {{ $transaction->isValid?"selected":"" }}>Valid</option>
                                         <option value="0" {{ $transaction->isValid?"":"selected" }}>Tidak Valid</option>
                                     </select>
-                                </p>
+                                </p> --}}
                                 <button type="submit" class="btn btn-sm btn-info">Submit</button>
                                 <button type="button" class="btn btn-sm btn-warning" onclick="window.location.href='/admin/transaction'">Kembali</button>
                             </form>
